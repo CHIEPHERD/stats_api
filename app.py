@@ -14,4 +14,5 @@ for env in envs:
     if not key in os.environ:
         os.environ[key] = value
 
-main()
+jobs.jobs()
+# main()

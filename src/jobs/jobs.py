@@ -1,15 +1,11 @@
 import time
 from rq import Queue
-from redis import Redis
-from src.jobs.hello_world import five_hello
+from src.jobs.hello_world import five_hello, five_hello2
+from src.services.redis_connector import RedisConnector
+from src.jobs.projects.create import create
 
 
 def jobs():
-    redis_conn = Redis()
+    redis_conn = RedisConnector().connection
     q = Queue(connection=redis_conn)
-    job = q.enqueue(five_hello)
-
-    time.sleep(2)
-
-    print(job.result)
-    return 221
+    q.enqueue(create, timeout=-1)

@@ -1,13 +1,13 @@
 import pika
-import os
+from src.services.environements import Environements
 
 class Publisher:
     class __Publisher:
         def __init__(self):
             print("born")
-            print(os.environ['RABBIT_IP'])
-            credentials = pika.PlainCredentials(os.environ['RABBIT_LOGIN'], os.environ['RABBIT_PASSWORD'])
-            params = pika.ConnectionParameters(os.environ['RABBIT_IP'], 5672, '/', credentials)
+            print(Environements().get('RABBIT_IP'))
+            credentials = pika.PlainCredentials(Environements().get('RABBIT_LOGIN'), Environements().get('RABBIT_PASSWORD'))
+            params = pika.ConnectionParameters(Environements().get('RABBIT_IP'), 5672, '/', credentials)
             self.connection = pika.BlockingConnection(params)
             self.channel = self.connection.channel()
 
@@ -18,6 +18,7 @@ class Publisher:
 
         def publish(self, message, exchange, routing_key):
             self.channel.basic_publish(exchange=exchange, routing_key=routing_key, body=message)
+
 
     instance = None
 
