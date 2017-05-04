@@ -1,2 +1,6 @@
 .idea
 .vagrant
+
+*.rdb
+
+__pycache__/
